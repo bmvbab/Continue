@@ -1,0 +1,43 @@
+plugins {
+    id 'java'
+}
+
+group 'GCon'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile(group: 'org.testng', name: 'testng', version: '7.0.0')
+}
+
+sourceSets {
+
+    main {
+        java {
+            include '**/*.java'
+        }
+    }
+    test {
+        java {
+            include '**/*.java'
+        }
+    }
+}
+
+task runP1(type: Test) {
+    systemProperties = System.properties
+
+    useTestNG() {
+        options.setConfigFailurePolicy 'continue'
+        useDefaultListeners = true
+        parallel = "methods"
+        threadCount = 4
+    }
+    testLogging.showStandardStreams = true
+
+}
